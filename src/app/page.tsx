@@ -60,11 +60,11 @@ export default async function DashboardPage() {
       <DashboardHeader />
       <main className="flex-1 p-4 md:p-6 space-y-6 max-w-[1600px] mx-auto w-full">
         {/* Analytics Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
           <div className="lg:col-span-2">
             <BookingTrendsChart data={trends} />
           </div>
-          <div className="space-y-6">
+          <div className="flex flex-col gap-6">
             <QuickActions />
             <SystemHealthMonitor health={health} />
           </div>

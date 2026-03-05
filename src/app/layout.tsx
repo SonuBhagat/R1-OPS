@@ -19,6 +19,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "RAAHI Admin | Compact Business Insights",
   description: "Advanced analytics and operations management for RAAHI",
+  icons: {
+    icon: '/iconlogo.png',
+  },
 };
 
 export default async function RootLayout({

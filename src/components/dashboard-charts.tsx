@@ -78,7 +78,7 @@ export function BookingTrendsChart({ data }: BookingTrendsChartProps) {
   }
 
   return (
-    <Card className="border-slate-200/60 bg-white/50 backdrop-blur-sm overflow-hidden h-full">
+    <Card className="border-slate-200/60 bg-white/50 backdrop-blur-sm overflow-hidden">
       <CardHeader className="pb-2">
         <CardTitle className="text-sm font-bold text-slate-900 flex items-center gap-2 uppercase tracking-tight">
           <Activity className="h-4 w-4 text-blue-500" /> Peak Booking Hours

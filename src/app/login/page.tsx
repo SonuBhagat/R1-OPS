@@ -5,7 +5,8 @@ import { loginAdmin } from "@/app/actions"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
-import { LayoutDashboard, Lock, User, AlertCircle, Loader2 } from "lucide-react"
+import { Lock, User, AlertCircle, Loader2 } from "lucide-react"
+import Image from "next/image"
 
 export default function LoginPage() {
   const [error, setError] = useState<string | null>(null)
@@ -35,11 +36,10 @@ export default function LoginPage() {
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-blue-500 to-indigo-600" />
         
         <CardHeader className="pt-8 md:pt-10 pb-4 md:pb-6 text-center">
-          <div className="mx-auto w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-primary flex items-center justify-center shadow-lg shadow-primary/20 mb-4 md:mb-6 group hover:scale-110 transition-transform duration-500">
-            <LayoutDashboard className="h-7 w-7 md:h-8 md:h-8 text-white group-hover:rotate-12 transition-transform" />
+          <div className="mx-auto w-48 md:w-60 mb-4 md:mb-6 group hover:scale-105 transition-transform duration-500">
+            <Image src="/fulllogo.png" alt="RAAHI Logo" width={400} height={100} className="w-full h-auto object-contain drop-shadow-lg" />
           </div>
-          <CardTitle className="text-2xl md:text-3xl font-bold text-white tracking-tight">RAAHI ADMIN</CardTitle>
-          <CardDescription className="text-xs md:text-sm text-slate-400 font-medium">Secure Access Control Panel</CardDescription>
+          <CardDescription className="text-xs md:text-sm text-slate-400 font-medium mt-2">Secure Access Control Panel</CardDescription>
         </CardHeader>
 
         <CardContent className="px-6 md:px-8 pb-8 md:pb-10">

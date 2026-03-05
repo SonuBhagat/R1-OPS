@@ -11,6 +11,8 @@ import {
   BreadcrumbSeparator 
 } from "@/components/ui/breadcrumb"
 import { GlobalSearch } from "@/components/global-search"
+import { Button } from "@/components/ui/button"
+import { Bell } from "lucide-react"
 
 export function DashboardHeader() {
   return (

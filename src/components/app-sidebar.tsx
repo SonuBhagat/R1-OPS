@@ -3,6 +3,7 @@
 import { logoutAdmin } from "@/app/actions"
 
 import * as React from "react"
+import Image from "next/image"
 import {
   LayoutDashboard,
   Users,
@@ -74,8 +75,8 @@ export function AppSidebar({ user, ...props }: React.ComponentProps<typeof Sideb
     <Sidebar collapsible="icon" className="border-r" {...props}>
       <SidebarHeader className="h-14 flex items-center px-4 border-b">
         <div className="flex items-center gap-2 font-semibold">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-            <Route className="h-5 w-5" />
+          <div className="flex h-8 w-8 items-center justify-center">
+            <Image src="/iconlogo.png" alt="RAAHI Logo" width={32} height={32} className="object-contain" />
           </div>
           <span className="text-xl tracking-tight group-data-[collapsible=icon]:hidden">RAAHI Admin</span>
         </div>
