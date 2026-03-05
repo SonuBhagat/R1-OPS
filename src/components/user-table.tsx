@@ -62,7 +62,7 @@ export function UserTable({ users }: UserTableProps) {
   )
 
   return (
-    <div className="rounded-xl border border-slate-200/60 bg-white/50 backdrop-blur-sm overflow-hidden">
+    <div className="rounded-xl border border-slate-200/60 bg-white/50 backdrop-blur-sm overflow-x-auto">
       <Table>
         <TableHeader>
           <TableRow className="bg-slate-50/50 hover:bg-slate-50/50 border-b border-slate-200/60">

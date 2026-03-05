@@ -33,7 +33,7 @@ export default async function AdminsPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Create Admin Form */}
           <div className="lg:col-span-1">
-            <Card className="border-slate-200/60 sticky top-6 overflow-hidden bg-white/50">
+            <Card className="border-slate-200/60 lg:sticky top-6 overflow-hidden bg-white/50">
                <div className="absolute top-0 left-0 w-full h-1 bg-primary" />
               <CardHeader className="pb-4">
                 <CardTitle className="text-sm font-bold text-slate-900 flex items-center gap-2 uppercase tracking-tight">
@@ -112,33 +112,35 @@ export default async function AdminsPage() {
               <CardContent className="p-0">
                 <div className="divide-y divide-slate-100">
                   {admins.map((admin: any) => (
-                    <div key={admin.id} className="p-4 hover:bg-slate-50/50 transition-colors flex items-center justify-between group">
-                      <div className="flex items-center gap-4">
-                        <div className={`h-10 w-10 rounded-xl flex items-center justify-center transition-transform group-hover:scale-110 ${
+                    <div key={admin.id} className="p-4 hover:bg-slate-50/50 transition-colors flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 group">
+                      <div className="flex items-center gap-4 w-full">
+                        <div className={`h-10 w-10 shrink-0 rounded-xl flex items-center justify-center transition-transform group-hover:scale-110 ${
                           admin.role === 'superadmin' ? 'bg-amber-50 text-amber-600' : 'bg-blue-50 text-blue-600'
                         }`}>
                           {admin.role === 'superadmin' ? <ShieldAlert className="h-5 w-5" /> : <ShieldCheck className="h-5 w-5" />}
                         </div>
-                        <div className="flex flex-col">
-                          <div className="flex items-center gap-2">
-                            <span className="text-sm font-bold text-slate-900">{admin.name || admin.username}</span>
+                        <div className="flex flex-col min-w-0 flex-1">
+                          <div className="flex flex-wrap items-center gap-2">
+                            <span className="text-sm font-bold text-slate-900 truncate">{admin.name || admin.username}</span>
                             <Badge className={`text-[8px] h-4 uppercase font-black px-1.5 rounded-md border-0 ${
                               admin.role === 'superadmin' ? 'bg-amber-100 text-amber-700' : 'bg-slate-100 text-slate-600'
                             }`}>
                               {admin.role}
                             </Badge>
                           </div>
-                          <div className="flex items-center gap-2.5 text-[10px] text-slate-500 font-bold uppercase tracking-tight">
+                          <div className="flex flex-wrap items-center gap-y-1 gap-x-2.5 text-[10px] text-slate-500 font-bold uppercase tracking-tight">
                              <span className="flex items-center gap-1">@{admin.username}</span>
-                             <span className="flex items-center gap-1 border-l border-slate-200 pl-2">
+                             <span className="flex items-center gap-1 sm:border-l border-slate-200 sm:pl-2">
                                <Calendar className="h-2.5 w-2.5" /> Added {new Date(admin.created_at || '').toLocaleDateString()}
                              </span>
                           </div>
                         </div>
                       </div>
-                      <Button variant="ghost" size="icon" className="h-8 w-8 rounded-lg text-slate-400">
-                        <MoreVertical className="h-4 w-4" />
-                      </Button>
+                      <div className="flex items-center justify-end w-full sm:w-auto border-t sm:border-t-0 pt-2 sm:pt-0 border-slate-50">
+                        <Button variant="ghost" size="icon" className="h-8 w-8 rounded-lg text-slate-400">
+                          <MoreVertical className="h-4 w-4" />
+                        </Button>
+                      </div>
                     </div>
                   ))}
                 </div>

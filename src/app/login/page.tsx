@@ -31,18 +31,18 @@ export default function LoginPage() {
         <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-500/10 rounded-full blur-[120px] animate-pulse delay-700" />
       </div>
 
-      <Card className="w-full max-w-md border-white/10 bg-white/5 backdrop-blur-2xl shadow-2xl relative z-10 overflow-hidden rounded-3xl">
+      <Card className="w-full max-w-md border-white/10 bg-white/5 backdrop-blur-2xl shadow-2xl relative z-10 overflow-hidden rounded-3xl mx-4">
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-blue-500 to-indigo-600" />
         
-        <CardHeader className="pt-10 pb-6 text-center">
-          <div className="mx-auto w-16 h-16 rounded-2xl bg-primary flex items-center justify-center shadow-lg shadow-primary/20 mb-6 group hover:scale-110 transition-transform duration-500">
-            <LayoutDashboard className="h-8 w-8 text-white group-hover:rotate-12 transition-transform" />
+        <CardHeader className="pt-8 md:pt-10 pb-4 md:pb-6 text-center">
+          <div className="mx-auto w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-primary flex items-center justify-center shadow-lg shadow-primary/20 mb-4 md:mb-6 group hover:scale-110 transition-transform duration-500">
+            <LayoutDashboard className="h-7 w-7 md:h-8 md:h-8 text-white group-hover:rotate-12 transition-transform" />
           </div>
-          <CardTitle className="text-3xl font-bold text-white tracking-tight">RAAHI ADMIN</CardTitle>
-          <CardDescription className="text-slate-400 font-medium">Secure Access Control Panel</CardDescription>
+          <CardTitle className="text-2xl md:text-3xl font-bold text-white tracking-tight">RAAHI ADMIN</CardTitle>
+          <CardDescription className="text-xs md:text-sm text-slate-400 font-medium">Secure Access Control Panel</CardDescription>
         </CardHeader>
 
-        <CardContent className="px-8 pb-10">
+        <CardContent className="px-6 md:px-8 pb-8 md:pb-10">
           <form action={handleSubmit} className="space-y-5">
             <div className="space-y-2">
               <label className="text-[11px] font-bold text-slate-400 uppercase tracking-widest pl-1">Username</label>

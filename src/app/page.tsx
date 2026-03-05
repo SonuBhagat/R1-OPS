@@ -84,7 +84,7 @@ export default async function DashboardPage() {
                 <Target className="h-4 w-4 text-rose-500" /> Route Analysis
               </CardTitle>
             </CardHeader>
-            <CardContent className="p-0 flex-1">
+            <CardContent className="p-0 flex-1 overflow-x-auto">
               <Table>
                 <TableHeader>
                   <TableRow className="bg-slate-50/50 border-b border-slate-100">
@@ -116,7 +116,7 @@ export default async function DashboardPage() {
             </CardTitle>
             <Badge variant="outline" className="text-[9px] font-bold text-emerald-600 border-emerald-200 bg-emerald-50 uppercase tracking-tighter">Real-time</Badge>
           </CardHeader>
-          <CardContent className="p-0">
+          <CardContent className="p-0 overflow-x-auto">
             <Table>
               <TableHeader>
                 <TableRow className="bg-slate-50/50 hover:bg-slate-50/50 border-b border-slate-100">
