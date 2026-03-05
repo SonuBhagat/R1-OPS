@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { decrypt } from "@/lib/auth";
 
-const protectedRoutes = ["/", "/fleet", "/users", "/verification", "/operations", "/settings"];
+const protectedRoutes = ["/", "/fleet", "/users", "/verification", "/operations", "/settings", "/analytics"];
 const publicRoutes = ["/login"];
 
 export default async function middleware(req: NextRequest) {
@@ -20,11 +20,9 @@ export default async function middleware(req: NextRequest) {
     }
   }
 
-  /* 
   if (isProtectedRoute && !session) {
     return NextResponse.redirect(new URL("/login", req.nextUrl));
   }
-  */
 
   if (isPublicRoute && session && !path.startsWith("/login?")) {
     return NextResponse.redirect(new URL("/", req.nextUrl));
