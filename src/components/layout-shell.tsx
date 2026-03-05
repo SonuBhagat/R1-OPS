@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation"
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/app-sidebar"
 
-export function LayoutShell({ children }: { children: React.ReactNode }) {
+export function LayoutShell({ children, user }: { children: React.ReactNode, user: any }) {
   const pathname = usePathname()
   
   // Hide sidebar on login page
@@ -21,7 +21,7 @@ export function LayoutShell({ children }: { children: React.ReactNode }) {
 
   return (
     <SidebarProvider>
-      <AppSidebar />
+      <AppSidebar user={user} />
       <SidebarInset className="bg-background">
         {children}
       </SidebarInset>

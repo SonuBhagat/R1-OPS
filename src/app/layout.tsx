@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { LayoutShell } from "@/components/layout-shell";
+import { getSession } from "@/lib/auth";
 import React from "react";
 
 const geistSans = Geist({
@@ -20,18 +21,20 @@ export const metadata: Metadata = {
   description: "Advanced analytics and operations management for RAAHI",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await getSession();
+  const user = session?.admin || null;
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased font-sans`}
       >
         <TooltipProvider>
-          <LayoutShell>
+          <LayoutShell user={user}>
             {children}
           </LayoutShell>
         </TooltipProvider>

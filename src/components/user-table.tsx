@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { 
   Table, 
   TableBody, 
@@ -51,6 +52,7 @@ interface UserTableProps {
 }
 
 export function UserTable({ users }: UserTableProps) {
+  const router = useRouter()
   const [searchTerm, setSearchTerm] = useState("")
 
   const filteredUsers = users.filter(user => 
@@ -75,7 +77,11 @@ export function UserTable({ users }: UserTableProps) {
         <TableBody>
           {filteredUsers.length > 0 ? (
             filteredUsers.map((user) => (
-              <TableRow key={user.id} className="group hover:bg-slate-50/80 transition-all duration-200 border-b border-slate-100 last:border-0 h-16">
+              <TableRow 
+                key={user.id} 
+                className="group hover:bg-slate-50/80 transition-all duration-200 border-b border-slate-100 last:border-0 h-16 cursor-pointer"
+                onClick={() => router.push(`/users/${user.id}`)}
+              >
                 <TableCell className="px-6">
                   <div className="flex items-center gap-3">
                     <div className="relative">
@@ -145,7 +151,7 @@ export function UserTable({ users }: UserTableProps) {
                     <span className="text-[11px] text-slate-600 font-semibold">{user.joinedAt}</span>
                   </div>
                 </TableCell>
-                <TableCell className="text-right px-6">
+                <TableCell className="text-right px-6" onClick={(e) => e.stopPropagation()}>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button variant="ghost" size="icon" className="h-8 w-8 rounded-lg hover:bg-slate-100 text-slate-500">

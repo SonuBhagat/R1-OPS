@@ -65,7 +65,11 @@ const data = {
   ],
 }
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({ user, ...props }: React.ComponentProps<typeof Sidebar> & { user: any }) {
+  const displayName = user?.name || data.user.name
+  const displayEmail = user?.username ? `${user.username}@raahione.in` : data.user.email
+  const displayAvatar = user?.avatar || data.user.avatar
+
   return (
     <Sidebar collapsible="icon" className="border-r" {...props}>
       <SidebarHeader className="h-14 flex items-center px-4 border-b">
@@ -97,12 +101,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               <DropdownMenuTrigger asChild>
                 <SidebarMenuButton size="lg" className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground">
                   <Avatar className="h-8 w-8 rounded-lg">
-                    <AvatarImage src={data.user.avatar} alt={data.user.name} />
-                    <AvatarFallback className="rounded-lg">AD</AvatarFallback>
+                    <AvatarImage src={displayAvatar} alt={displayName} />
+                    <AvatarFallback className="rounded-lg">{displayName.substring(0, 2).toUpperCase()}</AvatarFallback>
                   </Avatar>
                   <div className="grid flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden">
-                    <span className="truncate font-semibold">{data.user.name}</span>
-                    <span className="truncate text-xs">{data.user.email}</span>
+                    <span className="truncate font-semibold">{displayName}</span>
+                    <span className="truncate text-xs">{displayEmail}</span>
                   </div>
                 </SidebarMenuButton>
               </DropdownMenuTrigger>
