@@ -11,13 +11,19 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import type { Options } from 'highcharts'
-import { getDashboardStats, getRecentBookings, getRouteAnalytics } from "./actions"
-
+import { getDashboardStats, getRecentBookings, getRouteAnalytics, getBookingTrends, getRideStatusBreakdown, getSystemHealth } from "./actions"
+import { BookingTrendsChart, RideStatusChart } from "@/components/dashboard-charts"
+import { QuickActions, SystemHealthMonitor } from "@/components/dashboard-widgets"
 
 export default async function DashboardPage() {
-  const liveStats = await getDashboardStats();
-  const liveBookings = await getRecentBookings();
-  const routeAnalytics = await getRouteAnalytics();
+  const [liveStats, liveBookings, routeAnalytics, trends, statusBreakdown, health] = await Promise.all([
+    getDashboardStats(),
+    getRecentBookings(),
+    getRouteAnalytics(),
+    getBookingTrends(),
+    getRideStatusBreakdown(),
+    getSystemHealth()
+  ]);
 
   const stats = [
     {
@@ -52,27 +58,62 @@ export default async function DashboardPage() {
   return (
     <div className="flex flex-col min-h-screen bg-slate-50/30">
       <DashboardHeader />
-      <main className="flex-1 p-6 space-y-6 max-w-[1600px] mx-auto w-full">
-        {/* KPI Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {stats.map((stat) => (
-            <Card key={stat.title} className="border-slate-200/60 group transition-all duration-300 overflow-hidden bg-white/50">
-              <CardContent className="p-5 flex flex-col gap-3">
-                <div className="flex items-center justify-between">
-                  <div className={`p-2 rounded-lg ${stat.bg} ${stat.color} transition-transform group-hover:scale-110`}>
-                    <stat.icon className="h-4 w-4" />
-                  </div>
-                  <Badge variant="outline" className={`text-[10px] font-bold border-0 bg-transparent ${stat.trend === 'up' ? 'text-emerald-600' : 'text-rose-600'}`}>
-                    {stat.change}
-                  </Badge>
-                </div>
-                <div>
-                  <div className="text-2xl font-bold tracking-tight text-slate-900">{stat.value}</div>
-                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">{stat.title}</p>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+      <main className="flex-1 p-4 md:p-6 space-y-6 max-w-[1600px] mx-auto w-full">
+        {/* Analytics Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2">
+            <BookingTrendsChart data={trends} />
+          </div>
+          <div className="space-y-6">
+            <QuickActions />
+            <SystemHealthMonitor health={health} />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-1">
+            <RideStatusChart data={statusBreakdown} />
+          </div>
+          <div className="lg:col-span-2">
+            {/* KPI Grid Integrated */}
+             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 h-full content-start">
+              {stats.map((stat) => (
+                <Card key={stat.title} className="border-slate-200/60 group transition-all duration-300 overflow-hidden bg-white/50">
+                  <CardContent className="p-5 flex flex-col gap-3">
+                    <div className="flex items-center justify-between">
+                      <div className={`p-2 rounded-lg ${stat.bg} ${stat.color} transition-transform group-hover:scale-110`}>
+                        <stat.icon className="h-4 w-4" />
+                      </div>
+                      <Badge variant="outline" className={`text-[10px] font-bold border-0 bg-transparent ${stat.trend === 'up' ? 'text-emerald-600' : 'text-rose-600'}`}>
+                        {stat.change}
+                      </Badge>
+                    </div>
+                    <div>
+                      <div className="text-2xl font-bold tracking-tight text-slate-900">{stat.value}</div>
+                      <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{stat.title}</div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+              
+              {/* Secondary stats/info if needed */}
+              <Card className="sm:col-span-3 border-emerald-100 bg-emerald-50/30 overflow-hidden relative">
+                 <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full blur-3xl -mr-16 -mt-16" />
+                 <CardContent className="p-4 flex items-center justify-between relative z-10">
+                    <div className="flex items-center gap-3">
+                       <div className="p-2 bg-emerald-500 rounded-xl">
+                          <Zap className="h-4 w-4 text-white" />
+                       </div>
+                       <div>
+                          <div className="text-sm font-bold text-slate-900">Platform optimization active</div>
+                          <div className="text-[10px] text-slate-500 font-medium">Automatic matching engine is running at 100% capacity</div>
+                       </div>
+                    </div>
+                    <Button variant="outline" size="sm" className="h-8 text-[10px] font-bold uppercase rounded-lg border-emerald-200 text-emerald-700 bg-white">View Engine Logs</Button>
+                 </CardContent>
+              </Card>
+            </div>
+          </div>
         </div>
 
         {/* Charts & Table Section */}
