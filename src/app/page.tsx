@@ -11,18 +11,19 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import type { Options } from 'highcharts'
-import { getDashboardStats, getRecentBookings, getRouteAnalytics, getBookingTrends, getRideStatusBreakdown, getSystemHealth } from "./actions"
-import { BookingTrendsChart, RideStatusChart } from "@/components/dashboard-charts"
+import { getDashboardStats, getRecentBookings, getRouteAnalytics, getBookingTrends, getRideStatusBreakdown, getSystemHealth, getDailyUserGrowth } from "./actions"
+import { BookingTrendsChart, RideStatusChart, UserGrowthChart } from "@/components/dashboard-charts"
 import { QuickActions, SystemHealthMonitor } from "@/components/dashboard-widgets"
 
 export default async function DashboardPage() {
-  const [liveStats, liveBookings, routeAnalytics, trends, statusBreakdown, health] = await Promise.all([
+  const [liveStats, liveBookings, routeAnalytics, trends, statusBreakdown, health, userGrowth] = await Promise.all([
     getDashboardStats(),
     getRecentBookings(),
     getRouteAnalytics(),
     getBookingTrends(),
     getRideStatusBreakdown(),
-    getSystemHealth()
+    getSystemHealth(),
+    getDailyUserGrowth()
   ]);
 
   const stats = [
@@ -61,8 +62,9 @@ export default async function DashboardPage() {
       <main className="flex-1 p-4 md:p-6 space-y-6 max-w-[1600px] mx-auto w-full">
         {/* Analytics Section */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-2 space-y-6">
             <BookingTrendsChart data={trends} />
+            <UserGrowthChart data={userGrowth} />
           </div>
           <div className="flex flex-col gap-6">
             <QuickActions />

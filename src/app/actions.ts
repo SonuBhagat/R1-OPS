@@ -243,7 +243,7 @@ export async function getKYCPendingDrivers() {
 
     return drivers.map(driver => ({
       id: driver.id,
-      name: driver.name || "Unknown",
+      name: driver.name || driver.phone || "Unnamed User",
       phone: driver.phone || "No phone",
       status: driver.is_verified ? "Verified" : "Pending",
       date: driver.created_at ? new Date(driver.created_at).toLocaleDateString() : "Today",
@@ -390,7 +390,7 @@ export async function getAllUsers() {
 
     return users.map(user => ({
       id: user.id,
-      name: user.name || "Unknown",
+      name: user.name || user.phone || "Unnamed User",
       phone: user.phone || "No phone",
       email: user.email || "No email",
       role: (user.role || "rider").toLowerCase(),
@@ -439,7 +439,7 @@ export async function getUserById(userId: string) {
 
     return {
       id: user.id,
-      name: user.name || "Unknown",
+      name: user.name || user.phone || "Unnamed User",
       phone: user.phone || "No phone",
       email: user.email || "No email",
       role: (user.role || "rider").toLowerCase(),
@@ -608,5 +608,48 @@ export async function globalSearch(query: string) {
     return results;
   } catch (error) {
     return [];
+  }
+}
+
+export async function getDailyUserGrowth() {
+  try {
+    const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+    const users = await prisma.users.findMany({
+      where: {
+        created_at: {
+          gt: sevenDaysAgo
+        }
+      },
+      select: {
+        created_at: true
+      }
+    });
+
+    const dailyCounts: { [key: string]: number } = {};
+    const labels: string[] = [];
+    
+    for (let i = 6; i >= 0; i--) {
+      const d = new Date();
+      d.setDate(d.getDate() - i);
+      const dateString = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      labels.push(dateString);
+      dailyCounts[dateString] = 0;
+    }
+
+    users.forEach(user => {
+      if (user.created_at) {
+        const dateString = new Date(user.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        if (dailyCounts[dateString] !== undefined) {
+          dailyCounts[dateString]++;
+        }
+      }
+    });
+
+    const data = labels.map(label => dailyCounts[label]);
+
+    return { labels, data };
+  } catch (error) {
+    console.error("Failed to fetch daily user growth:", error);
+    return { labels: [], data: [] };
   }
 }

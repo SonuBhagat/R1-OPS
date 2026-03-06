@@ -65,7 +65,7 @@ export function UserProfileHeader({ user }: UserProfileHeaderProps) {
                   user.role === 'both' ? 'bg-purple-50 text-purple-700 ring-purple-100' : 
                   'bg-slate-50 text-slate-600 ring-slate-100'
                 }`}>
-                  {user.role}
+                  {user.role === 'both' ? 'Driver & Rider' : user.role}
                 </Badge>
               </div>
               
